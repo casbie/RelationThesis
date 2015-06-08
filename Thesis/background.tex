@@ -1,0 +1,48 @@
+\chapter{Background}
+In this chapter, we provide the introduction of knowledge representation and extraction in the first section. 
+In the second section, we surveyed the related work about relation extraction, including the methods of supervised learning, distant supervision, and multiple instance learning. 
+As for last section, we focus on the related work of Chinese relation extraction.
+
+\section{knowledge Representation and Extraction}
+In real world, knowledge exists in different forms like text, picture, audio, video, or even in abstract form, such as someone’s memory. 
+When considering textual knowledge, human could reason the meaning and retrieve the knowledge when it is needed. 
+As for computers, to understand the textual knowledge, structured format is required. 
+How to extract knowledge from unstructured text to structured representation remains an important issue. 
+In this section, we will discuss several methods of knowledge representation and extraction.
+
+\subsection{Knowledge Representation}
+
+\subsection{Knowledge Extraction}
+Automatic Content Extraction (ACE)\cite{ACE_intro}, as a track of Text Analysis Conference (TAC) after 2009, aims at developing novel methods to extract information from natual language text. 
+In this program, entities, relation, and events are extracted.
+After 2003, the program includes multilingual tracks, including English, Arabic and Chinese. 
+The released data is used for supervised learning and promoted much good work. Some work related to this thesis will be discussed in subsequent section.
+
+\subsection{Relation Extraction}
+
+\section{Related Work of Relational Pair Extraction}
+
+\subsection{Supervised Learning}
+By using supervised learning, a set of training data is required and the extraction problem is formulated as classification problem.
+When considering single relation, the problem could be viewed as binary classification problem and aims at decide whether the relation exists in given entity pairs. 
+
+\subsubsection{Feature-Based Methods}
+
+\subsubsection{Kernel-Based Methods}
+
+\subsection{Distant Supervision}
+To prevent ineffieiently generating training data, distant supervision is used for reducing the labelling work. 
+Distant supervision uses weakly labelled training data to predict huge testing data. 
+For relation extraction with distant supervision, Mintz\cite{mintz_distant} used Wikipedia as corpus and Freebase as seed pool for training a classification model. 
+A strong assumption of distant supervision is that if two entities participate in one relation, then any sentence contains the two entity can represent the relation. 
+
+\subsection{Multiple Instance Learning}
+Given Distant supervision, the labelling effort is heavily reduced but cause the problem of noise when the data sentences are correlated with the seed.
+For example, considering 2 sentences, ``Alice was born in Taipei'' and ``Alice went to Taipei on Saturday'' both contains the two entities ``Alice'' and ``Taipei'', but the relation in the former sentence is $WasBornIn$ while in the latter sentence is $WentTo$.
+Riedel\cite{riedel_modeling} indicated that 31\% alignments of Freebase and New York Time Corpus violate the distant supervision assumption while only 13\% ones of Freebase and Wikipedia violate.
+
+\section{Relational Pair Extraction in Chinese}
+
+\subsection{Characteristics in Chinese Relational Pair Extraction}
+\subsection{Related Work in Chinese}
+

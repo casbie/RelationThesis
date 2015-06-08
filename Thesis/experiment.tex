@@ -1,0 +1,149 @@
+\chapter{Experiment and Result}
+This chapter shows the experiment for Chinese relational pair extraction.
+First, the data source and data generating process will be explained.
+Then the experimentl setting will be presented in the second section.
+In the last 2 sections, the result for testing the proposed framework with given data will be discussed.
+
+\section{Dataset}
+Distant supervision learning, which is an semi-supervised framework, uses small size of labelled data and huge size of unlabelled data for training.
+In relation extraction work, the labelled data are usually from an existing dataset and the unlabelled data are from a huge corpus containing many sentences, such as news corpus or Wikipedia.
+In this thesis, we use Chinese entities pairs from ConceptNet as labeled data and sentences in Taiwan Sinica Corpus as unlabeled data.
+
+\subsection{ConceptNet}
+ConceptNet is developed by MIT Media Lab\cite{ConceptNet5}, containing only English data at beginning.
+It is a graphical structure, with node representing $concept$, and link representing $relation$, describing a commonsense knowledge base.
+A commonsense fact, formulated as two concepts and one relation bwtween them, is called $assertion$, which is stored as 2 nodes ($concepts$) and 1 link ($relation$) in the ConceptNet graph.
+The knowledge in ConceptNet is originally provided by human as crowesourcing.
+Afterwards, the authors imported knowledge from other datasets such as WordNet, Wikipedia, Wikitionary, DBPedia, and other sources.
+From ConceptNet 3, by collaborating with universities from different countries, ConceptNet absorbed data from other languages, becoming a multilingual commonsense dataset.
+Chinese assertions are collected from an online pet game, by feeding the pets new knowledge.
+\par
+Before ConceptNet 4, the relations of ConceptNet is predefined.
+When collecting knowledge in Chinese, only 15 relations are considered (shown in Table \ref{tab:relation_list}).
+The relation $AtLocation$ represents the relationship between an object and a location. For example, $AtLocation(Taipei, Taiwen)$ indicates that ``Taipei is located in Taiwan''.
+\par
+Each assertion is regarded as labelled data when training a distant supervision model.
+The experiment uses Chinese assertions related to the relation $AtLocation$.
+Since Chinese assertions in ConceptNet are generated from online users, the reliability is not guaranteed.
+Among all 32816 assertions, only about $37\%$ of data are valid for training.
+The examples of seeds from ConceptNet are shown in Table \ref{tab:AtLocation_seed}.
+
+\begin{table}[t]
+\begin{center}
+\begin{tabular}{lcc}
+\hline
+Relation Name   & Number of Assertions\\  
+\hline
+AtLocation  & 32816\\
+CausesDesire & 19408\\
+HasProperty & 6822\\
+NotDesires & 23930\\
+UsedFor & 13548\\
+Causes & 77336\\
+HasSubevent & 40655\\
+PartOf & 6159\\
+Desires & 21772\\
+IsA & 16094\\
+HasFirstSubevent & 12046\\
+MadeOf & 16357\\
+CapableOf & 27444\\
+SymbolOf & 4736\\
+MotivatedByGoal &56636\\
+\hline
+\end{tabular}
+\caption[List of relations corresponding to Chinese knowledge in ConceptNet]{\small List of relations corresponding to Chinese knowledge in ConceptNet}
+\label{tab:relation_list}
+\end{center}
+\end{table}
+
+\begin{table}[t]
+\begin{center}
+\begin{tabular}{| c | l | l |}
+\hline
+label  &   entity (object)   &    entity (location)\\
+\hline
+O   &   教授(professor)   &   研究所 (graduate school)\\
+O   &   員工 (staff)   &   公司 (company)\\
+O   &   人民 (people)   &   台灣 (Taiwan)\\
+O   &   學生 (student)   &   學校 (school)\\
+O   &   病人 (patient)   &   醫院 (hospital)\\
+O   &   鯉魚 (carp)   &   池塘 (pond)\\
+X   &   美國 (USA)   &   亞洲 (Asia)\\
+X   &   程式 (program)   &   電腦 (computer)\\
+X   &   太陽 (sun)   &   夏天 (summer)\\
+X   &   觀眾 (audience)   &   電視 (television)\\
+\hline
+\end{tabular}
+\caption[Example of positive and negative entity pairs of Chineses knowledge in ConceptNet]{\small Example of positive and negative entity pairs of Chineses knowledge in ConceptNet}
+\label{tab:AtLocation_seed}
+\end{center}
+\end{table}
+
+%==========我是ConceptNet的分隔線==========%
+\subsection{Sinica Corpus}
+The full name of Sinica Corpus\cite{Sinica_corpus} is ``Academia Sinica Balanced Corpus of Modern Chinese'', developed from 1994.
+This corpus contains articles from 1981 to 2007, spread in different fields including philosophy, science, society, art, life, and literature.
+The source of articles is also diverse, including news, book, textbook, magazine, and so on, which shows the corpus contains different styles of articles.
+Each article is stored as sentences by segmenting the article with comma, period, semicolon, question mark and exclamation mark.
+In Chinese articles, the usage of comma is slightly different from English.
+Sometimes, the sentence before the comma and after the comma can be independent in grammar while they may be dependent in meaning.
+The corpus is separated as about 6 hundred thousand sentences and each sentence is segmented as words.
+Each word is annotated with a part-of-speech tag.
+Since the articles of Sinica Corpus are cross many years, the phrasing may be slightly diferent to the wording nowadays.
+The wording is more conscientious and careful because the sources are formal media.
+The example of sentences are shown on Table \ref{tab:sa_example}
+\par
+The experiment uses the sentences in Sinica Corpus as unlabelled data.
+Each sentences are regarded as a list of words and each 2 words in the sentence may convey one or no relation.
+The method for generating training data from sentences is described in Section \ref{sec:method_label} on page \pageref{sec:method_label}.
+
+\begin{table}[t]
+\begin{center}
+\begin{tabular}{| m{10cm} | m{6cm} |}
+\hline
+Sentence   &   Translation\\
+\hline
+{\small 民族學(Na)　研究所(Nc)　應(D)　主持(VC)　之(DE)　「(PARENTHESISCATEGORY)　台灣(Nc)　與(Caa)　東南亞(Nc)　土著(Na)　文化(Na)　與(Caa)　血緣(Na)　關係(Na)　」(PARENTHESISCATEGORY)　主題(Na)　研究(Nv)　計劃(Na)　之(DE)　需要(Na)　，(COMMACATEGORY)}  &   {According to the need for hosting the research project ``aboriginal culture and blood relationship bwtween Taiwan and Southeast Asia'', Institute of Ethnology ...}\\
+\hline
+{\small 邀請(VC)　蘇聯(Nc)　國家(Na)　科學院(Nc)　世界(Nc)　文學(Na)　研究所(Nc)　研究員(Na)　Ｂｏｒｉｓ(FW)　Ｐａｒｎｉｃｋｅｌ(FW)　教授(Na)　於(P)　六月(Nd)　十九日(Nd)　至(P)　廿六日(Nd)　來訪(VA)　，(COMMACATEGORY)}  &   {... invited the researcher, Professor Boris Parnickel, who comes from Institute of World Literature of Russian Academy of Sciences, to visit from 19th to 26th June.}\\
+\hline
+{\small Ｂｏｒｉｓ(FW)　教授(Na)　之(DE)　專長(Na)　為(VG)　東南(Ncd)　（(PARENTHESISCATEGORY)　特別(VH)　是(SHI)　馬來亞(Nc)　及(Caa)　印尼(Nc)　）(PARENTHESISCATEGORY)　的(DE)　神話(Na)　傳說(Na)　及(Caa)　民俗(Na)　，(COMMACATEGORY)}   &   {Professor Boris specializes in the legend and folklore in Southeast Asia, especially in Malaysia and Indonesia, ...}\\
+\hline
+{\small 在(P)　此(Nep)　一(Neu)　領域(Na)　已(D)　有(V\_2)　傑出(VH)　之(DE)　研究(Nv)　成果(Na)　。(PERIODCATEGORY)}   &   {... having excellent achievements in this area.}\\
+\hline
+\end{tabular}
+\caption[Example of sentences in Sinica Corpus]{Example of sentences in Sinica Corpus}
+\label{tab:sa_example}
+\end{center}
+\end{table}
+
+%==========我是平衡語料庫分隔線==========%
+\subsection{UDN News Dataset}
+\par
+UDN.com is a news website in Taiwan, reporting various types of online news.
+Different from Sinica Corpus, articles in UDN news are less formal, including many novel terms.
+Sentences in UDN news are used as unlabelled data.
+Articles are segmented to sentences by a period stop, which may conserve complete meaning in the sentence.
+The articles are raw texts without any label or processing.
+Before training, these sentences have to be segmented to words, labelled with part-of-speech tag, and other grammatically parsed with external NLP tools.
+\par
+There are two sets of UDN data collected for experiment.
+One is recent news on the real time news column (from February to May 2015), and another is historical news in the past 10 years, including 3 different columns.
+The difference of these 2 dataset is the size and age of news.
+
+\section{Experiment setting}
+
+\subsection{Experiment 1: Feature selection}
+\subsection{Experiment 2: MIL Algorithm selection}
+\subsection{Experiment 3: Iteration}
+\subsection{Experiment 4: Multiple Relations}
+
+\section{Evaluation}
+We use $Accuracy$ for evaluating the result of cross validation:
+
+\begin{equation}
+Accuracy = \frac{\abs{accuate\ testing\ data}}{\abs{total\ testing\ data}}
+\label{eq:accuracy}
+\end{equation}
+
+\section{Result and Discussion}

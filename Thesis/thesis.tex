@@ -1,0 +1,65 @@
+\documentclass{ntuthesis}
+
+\usepackage{times}
+\usepackage{verbatim}
+\usepackage{color}
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{fontspec}
+\usepackage{hyperref}
+\usepackage{commath}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{amsthm}
+\usepackage{caption}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+%\usepackage{indentfirst}
+
+% Using the tex-text mapping for ligatures etc.
+\defaultfontfeatures{Mapping=tex-text}
+
+% Set the default fonts
+\setmainfont{Times New Roman}
+\setCJKmainfont{BiauKai}
+
+% Your information goes here
+\input{ntuvars}
+
+\begin{document}
+
+\frontmatter
+
+\makecover
+
+\makecertification
+
+\input{acknowledgements}
+\input{abstract}
+
+\tableofcontents
+\listoffigures
+\listoftables
+%\listofalgorithms
+\mainmatter
+
+% Your thesis goes here
+\input{introduction}
+\input{background}
+\input{methodology}
+\input{experiment}
+\input{application}
+\input{conclusion}
+
+\appendix
+
+\backmatter
+
+\addcontentsline{toc}{chapter}{\bibname}
+\bibliographystyle{abbrv}
+
+% Your bibliography goes here
+\bibliography{thesis}
+
+\end{document}
